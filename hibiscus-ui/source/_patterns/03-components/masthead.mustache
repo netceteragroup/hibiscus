@@ -1,0 +1,24 @@
+<section class="component component-masthead">
+  <div class="container-fluid">
+    <div class="masthead-wrapper">
+      <div class="masthead-content">
+        <h1 class="">
+          {{#mgn}}
+            ${content.title}
+          {{/mgn}}
+          {{^mgn}}
+            {{ main-title }}
+          {{/mgn}}
+        </h1>
+        <h2 class="">
+          {{#mgn}}
+            ${content.subtitle}
+          {{/mgn}}
+          {{^mgn}}
+            {{ secondary-title }}
+          {{/mgn}}
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>

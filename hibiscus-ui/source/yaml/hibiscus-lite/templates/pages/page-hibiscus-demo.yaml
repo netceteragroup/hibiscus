@@ -1,0 +1,9 @@
+visible: true
+title: Hibiscus Demo
+areas:
+  main:
+    availableComponents:
+      section-masthead:
+        id: hibiscus-lite:components/component-masthead
+      section-info:
+        id: hibiscus-lite:components/component-info

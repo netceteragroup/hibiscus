@@ -1,0 +1,11 @@
+form:
+  tabs:
+    - name: tabTexts
+      label: section-masthead
+      fields:
+        - name: title
+          class: textField
+          label: Title
+        - name: subtitle
+          class: textField
+          label: Subtitle

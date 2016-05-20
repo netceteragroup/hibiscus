@@ -1,0 +1,14 @@
+form:
+  tabs:
+    - name: tabTexts
+      label: component-teaser
+      fields:
+        - name: teaserTitle
+          class: textField
+          label: Title
+        - name: teaserText
+          class: textField
+          label: Text
+        - name: buttonText
+          class: textField
+          label: Button Text

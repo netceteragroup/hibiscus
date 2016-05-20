@@ -1,0 +1,7 @@
+/**/.project
+/**/.settings
+/**/target
+/**/.classpath
+/**/.externalToolBuilders
+**/npm-debug.log
+/.metadata

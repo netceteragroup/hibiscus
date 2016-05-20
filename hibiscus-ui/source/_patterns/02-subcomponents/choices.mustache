@@ -1,0 +1,22 @@
+<div class="subcomponent subcomponent-choices">
+  <div class="col-md-6">
+    <div class="choices">
+      {{#mgn}}
+      [#assign choices = [
+      {'name': 'Finance', 'href':'/'},
+      {'name': 'Connected Health', 'href':'/'},
+      {'name': 'Payment', 'href':'/'}
+      {'name': 'Transportation', 'href':'/'}
+      ]]
+      [#list choices as element]
+            {{> atoms-choice }}
+        [/#list]
+      {{/mgn}}
+      {{^mgn}}
+      {{#choices}}
+        {{> atoms-choice }}
+      {{/choices}}
+      {{/mgn}}
+    </div>
+  </div>
+</div>

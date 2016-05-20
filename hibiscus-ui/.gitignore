@@ -1,0 +1,14 @@
+target/
+.DS_Store
+public/
+dist/
+dist-magnolia/
+dist-styleguide/
+temp/
+node_modules/
+sources/styles/components
+npm-debug.log
+external/
+.project
+.classpath
+magnolia-resources/

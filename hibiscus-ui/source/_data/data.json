@@ -1,0 +1,18 @@
+{
+  "mgn": false,
+  "main-title": "Products",
+  "secondary-title": "When one size fits all!",
+  "choices": [{
+    "href": "",
+    "linktext": "Finance"
+  }, {
+    "href": "",
+    "linktext": "Connected Health"
+  }, {
+    "href": "",
+    "linktext": "Payment"
+  }, {
+    "href": "",
+    "linktext": "Transportation"
+  }]
+}

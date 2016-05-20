@@ -1,0 +1,114 @@
+// Local Variables
+
+$choice-size: 150px;
+$choice-margin: 10px;
+$section-padding: 10px;
+$section-height: 2 * ($choice-size + $choice-margin) + 2 * $section-padding;
+$default-padding: 10px;
+
+//
+// Mixins
+//
+
+@mixin vertical-wrapper() {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin vertical-centered() {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+//
+// Pages
+//
+.container-fluid {
+  max-width: 1600px;
+}
+
+//
+// Components
+//
+
+// Info
+
+.component-info {
+  h3{
+    color: $brand-primary;
+  }
+}
+
+// Masthead
+
+.component-masthead{
+  .masthead-wrapper{
+    @include vertical-wrapper();
+    height: $section-height;
+  }
+  .masthead-content{
+    @include vertical-centered();
+  }
+  text-align: center;
+  h1{
+    font-size: 120px;
+    font-weight: bold;
+  }
+  h2{
+    font-size: 50px;
+  }
+}
+
+//
+// Subcomponents
+//
+
+// Teaser
+
+.subcomponent-teaser{
+  .section-teaser-wrapper{
+    @include vertical-wrapper();
+    height: $section-height;
+  }
+  .section-teaser-content{
+    @include vertical-centered();
+    padding: $default-padding;
+  }
+}
+
+// Choices
+.subcomponent-choices {
+  .choices {
+    width: 2*($choice-size + $choice-margin) + 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+//
+// Atoms
+//
+
+//Choice
+.atom-choice {
+  display: inline-block;
+  height: $choice-size;
+  width: $choice-size;
+  background-color: $brand-primary;
+  margin-bottom: $choice-margin;
+  margin-right: $choice-margin;
+  color: white;
+  position: relative;
+  &:focus, &:hover {
+      color: white;
+  }
+  p {
+    display: block;
+    padding: $default-padding;
+    margin: 0;
+    position: absolute;
+    left:0;
+    bottom: 0;
+  }
+}

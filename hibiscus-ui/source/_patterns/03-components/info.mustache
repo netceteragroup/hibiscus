@@ -1,0 +1,19 @@
+<section class="component component-info">
+  <div class="container-fluid">
+    <div class="row">
+      {{#mgn}}
+        [@cms.area name="section-info"/]
+      {{/mgn}}
+      {{^mgn}}
+        {{#variant1}}
+          {{> subcomponents-choices }}
+          {{> subcomponents-teaser }}
+        {{/variant1}}
+        {{#variant2}}
+          {{> subcomponents-teaser }}
+          {{> subcomponents-choices }}
+        {{/variant2}}
+      {{/mgn}}
+    </div>
+  </div>
+</section>

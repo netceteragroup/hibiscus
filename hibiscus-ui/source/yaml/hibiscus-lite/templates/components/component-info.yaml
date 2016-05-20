@@ -1,0 +1,9 @@
+title: section-info
+visible: true
+areas:
+  section-info:
+    availableComponents:
+      subcomponent-choices:
+        id: hibiscus-lite:subcomponents/subcomponent-choices
+      subcomponent-teaser:
+        id: hibiscus-lite:subcomponents/subcomponent-teaser

@@ -1,0 +1,18 @@
+<div class="subcomponent subcomponent-teaser">
+  <div class="col-md-6">
+    <div class="section-teaser-wrapper">
+      <div class="section-teaser-content">
+        {{#mgn}}
+          [#if content.teaserTitle?has_content]<h3>${content.teaserTitle}</h3>[/#if]
+          [#if content.teaserText?has_content]<p>${content.teaserText}</p>[/#if]
+          [#if content.buttonText?has_content]{{> atoms-button }}[/#if]
+        {{/mgn}}
+        {{^mgn}}
+          <h3>Expert software services: Thoroughly digitize your business</h3>
+          <p>Our experience and skills are focused on delivering substance. We design, build, run and maintain high quality software just for you and your customers.</p>
+          {{> atoms-button }}
+        {{/mgn}}
+      </div>
+    </div>
+  </div>
+</div>

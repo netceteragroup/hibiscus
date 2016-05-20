@@ -1,0 +1,16 @@
+textField:  info.magnolia.ui.form.field.definition.TextFieldDefinition
+richTextField: info.magnolia.ui.form.field.definition.RichTextFieldDefinition
+dateField: info.magnolia.ui.form.field.definition.DateFieldDefinition
+hiddenField: info.magnolia.ui.form.field.definition.HiddenFieldDefinition
+multiValueField: info.magnolia.ui.form.field.definition.MultiValueFieldDefinition
+passwordField: info.magnolia.ui.form.field.definition.PasswordFieldDefinition
+selectField: info.magnolia.ui.form.field.definition.SelectFieldDefinition
+optionGroupField: info.magnolia.ui.form.field.definition.OptionGroupFieldDefinition
+twinColSelectField: info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition
+comboBoxField: info.magnolia.ui.form.field.definition.CheckBoxFieldDefinition
+compositeField: info.magnolia.ui.form.field.definition.CompositeFieldDefinition
+switchableField: info.magnolia.ui.form.field.definition.SwitchableFieldDefinition
+basicUploadField: info.magnolia.ui.form.field.definition.BasicUploadFieldDefinition
+damUploadFieldField: info.magnolia.dam.app.ui.field.definition.DamUploadFieldDefinition
+
+linkField: info.magnolia.ui.form.field.definition.LinkFieldDefinition

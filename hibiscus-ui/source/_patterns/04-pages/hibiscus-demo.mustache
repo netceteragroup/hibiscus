@@ -1,0 +1,17 @@
+{{#mgn}}
+[#assign title = content.title!"Basic Template"]
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="${ctx.contextPath}/.resources/hibiscus-lite/webresources/css/main.css">
+    [@cms.page /]
+</head>
+<body>
+    [@cms.area name="main"/]
+</body>
+</html>
+{{/mgn}}
+{{^mgn}}
+{{> components-masthead }}
+{{> components-info }}
+{{/mgn}}
