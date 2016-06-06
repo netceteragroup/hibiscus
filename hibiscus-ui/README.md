@@ -3,8 +3,8 @@
 
 ## Prerequisites:
 
-- Clone the Git-Repository and open the folder in your console
-- cd hibiscus-ui
+1. Clone the Git-Repository and open the folder in your console
+1. ```cd hibiscus-ui```
 
 ## Procedure:
 
@@ -15,34 +15,38 @@ Now the project should be set up correctly and any of the following tasks can be
 
 | command | description |
 | --- | --- |
-|npm run [command] 	|available commands: clean, setup, default, styleguide, dist, help|
-
-The following tasks might be useful:
-
-| command | description |
-| --- | --- |
-|npm install	|install needed npm-depencencies|
+|npm install	|install needed npm-dependencies|
 |npm run clean	|remove temporary and output directories|
-|npm start	|run hibiscus|
-|npm run serve	|same as npm start|
-|npm run styleguide	|render styleguide (templates and scss) into ./dist-styleguide|
-|npm run dist	|create dist into ./dist-magnolia (to be exported to magnolia )|
-|npm run combined	|combined dist (styleguide & magnolia)|
+|npm start	|run styleguide|
+|npm run serve	|same as 'npm start'|
+|npm run styleguide	|same as 'npm start'|
+|npm run styleguide:serve	|same as 'npm start'|
+|npm run styleguide:dist	|render styleguide (templates and scss) into ./dist-styleguide|
+|npm run magnolia	|run development mode (see Quick integration into magnolia)|
+|npm run magnolia:serve	|same as 'npm run magnolia'|
+|npm run magnolia:dist	|create dist into ./dist-magnolia (to be exported to magnolia )|
+|npm run combined:dist	|combined dist (styleguide & magnolia)|
 |npm run help	|show all available tasks|
-|npm run parker	|show css statistics|
+
+Basically, there are two different options to run 'serve' or 'dist' on either the styleguide or the magnolia-output. If not defined, the default is to run the serve command.
 
 ## Remarks:
 
 ### Quick integration into magnolia
-To make the templates and configuration available in your magnolia-instance, point your magnolia.resources.dir(in the magnolia.properties-file) to the output-folder(magnolia-resources) of hibiscus
+
+Prerequisite: have your magnolia instance running (e.g. in a tomcat) on port 8080.
+To change the port, you can find the corresponding config in /gulp/development.js, task 'magnolia'
+
+To make the templates and configuration available in your magnolia-instance, point your magnolia.resources.dir(in the magnolia.properties-file usually located in <your-tomcat-instance>/webapps/magnoliaAuthor/WEB-INF/config/default) to the output-folder(magnolia-resources) of hibiscus
 e.g. magnolia.resources.dir=<path to hibiscus>/hibiscus/hibiscus-ui/magnolia-resources
 
-**Make sure you have run 'npm run dist' and the resources can be found in hibiscus-ui/magnolia-resources/hibiscus-lite.**
+**Make sure you have run 'npm run magnolia:dist' and the resources can be found in hibiscus-ui/magnolia-resources/hibiscus-lite.**
 
-To make the template available as a page, go to WebDev > Site, and in the 'Site definitions' tab, select 'templates/availability/templates'. Add a content node called hibiscus-lite and add a property called 'id' with value 'hibiscus-lite:pages/page-hibiscus-demo'
+To make the site-template available as a page, go to WebDev > Site, and in the 'Site definitions' tab, select 'templates/availability/templates'. Add a content node called hibiscus-lite and add a property called 'id' with value 'hibiscus-lite:pages/page-hibiscus-demo'
 
-### [Parker](https://github.com/katiefenn/parker)
-CSS-statistics can be logged to the console by running 'npm run parker'
+To allow for browser-refreshing for development, Magnolia's caching-mechanism should be disabled. To do so, go to Configuration > Server > filters > cache and set (or create if not exists) a property 'enabled' with value false.
+
+Now, run the command 'npm run magnolia', and any changes to the sources should now be live-reloaded in the browser.
 
 ### Dependencies to be updated manually
 There are several files that were adjusted. If you update the underlying dependencies, please make sure to check those files for updates:

@@ -59,6 +59,7 @@ gulp.task('all', function(callback) {
     processTemplates();
     processDialogs();
     processApps();
+    callback();
 });
 
 /**
@@ -74,7 +75,7 @@ function processApps(){
 gulp.task('apps', function () {
   // console.log('Start task: apps');
     processApps();
-})
+});
 
 /**
 Copy WebResources

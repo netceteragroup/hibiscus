@@ -9,7 +9,8 @@
       "js" : "./source/js",
       "images" : "./source/images",
       "fonts" : "./source/fonts",
-      "css" : "./source/css/"
+      "css" : "./source/css",
+      "yaml" : "./source/yaml"
     },
     "public" : {
       "root" : "./dist-styleguide/",
@@ -21,7 +22,8 @@
       "fonts" : "./dist-styleguide/fonts",
       "css" : "./dist-styleguide/css"
     },
-    "temp" : "./temp/ftl/"
+    "temp" : "./temp/ftl/",
+    "magnolia" : "./magnolia-resources"
   },
   "styleGuideExcludes": [
     "templates",
@@ -52,9 +54,13 @@
   },
   "patternStateCascade": ["inprogress", "inreview", "complete"],
   "patternStates": {
-    "molecules-single-comment" : "complete",
-    "organisms-sticky-comment" : "inreview",
-    "templates-article" : "complete"
+    "atoms-button" : "inreview",
+    "atoms-choice" : "complete",
+    "subcomponents-choices" : "inprogress",
+    "subcomponents-teaser" : "complete",
+    "components-info" : "complete",
+    "components-masthead" : "complete",
+    "pages-hibiscus-demo" : "complete"
   },
   "patternExportKeys": [],
   "patternExportDirectory": "./pattern_exports/",

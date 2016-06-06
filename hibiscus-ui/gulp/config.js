@@ -8,7 +8,6 @@ var paths = {
   temp: './temp',
   styleguide: './dist-styleguide',
   distStyleguide: ['./dist-styleguide', './temp'],
-  distMagnolia: ['./magnolia-resources/hibiscus-lite', './temp'],
   cleanup: ['./magnolia-resources/hibiscus-lite', './dist-styleguide', './temp']
 };
 
