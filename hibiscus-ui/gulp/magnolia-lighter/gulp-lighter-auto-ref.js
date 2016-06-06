@@ -53,7 +53,7 @@ module.exports = function() {
 
             //Check for existance of file
             // @@ hibiscus ADJUSTMENT
-            var pathScript = (file.base + relPathScript).replace('source\\yaml\\','magnolia-resources\\');
+            var pathScript = (file.base + relPathScript).replace('source/yaml/','magnolia-resources/').replace('source\\yaml\\','magnolia-resources\\');
             // console.log("pathScript:" + pathScript);
             try {
                 var stats = fs.statSync(pathScript);
