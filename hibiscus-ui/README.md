@@ -1,7 +1,7 @@
 # Hibiscus - The Style Guide and Pattern Library Tool for Magnolia CMS
 
 ## Intro
-To understand the overall idea, we suggest you check out the slides of our [presentation on Atomic Design, Living Style Guides and the Holy Grail](http://www.slideshare.net/netceteragroup/atomic-design-living-style-guides-and-the-holy-grail?qid=ff419b36-a27c-427b-a8a4-e484ee6c2b0f&v=&b=&from_search=1) from the [Magnolia Conference 2016 in Basel](https://conference.magnolia-cms.com/2016/basel/program/netcetera.html). A link to the video will follow as soon as available.
+To understand the overall idea, we suggest you check out the slides of our [presentation on Atomic Design, Living Style Guides and the Holy Grail](http://www.slideshare.net/netceteragroup/atomic-design-living-style-guides-and-the-holy-grail?qid=ff419b36-a27c-427b-a8a4-e484ee6c2b0f&v=&b=&from_search=1) from the [Magnolia Conference 2016 in Basel](https://conference.magnolia-cms.com/2016/basel/program/netcetera.html). Maybe even more helpful is watching the [recording of the talk](https://www.youtube.com/watch?v=0qkRYDeXagE), especially the [demo part](https://www.youtube.com/watch?v=0qkRYDeXagE&feature=youtu.be&t=15m22s).
 
 ## Prerequisites
 
