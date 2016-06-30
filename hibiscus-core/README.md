@@ -24,6 +24,6 @@ Follow the steps section 'Quick integration into magnolia' in [hibiscus-ui/READM
 * [Netcetera](http://netcetera.com) / Damian, Adrian, Dominik, Stojan, Bisera, Corsin and Marcel
 
 ## Credits
-* [Patternlab](http://patternlab.io/) / [Brad Frost](https://github.com/bradfrost)
+* [Patternlab](http://patternlab.io/) / [Dave Olsen](https://github.com/dmolsen) and [Brad Frost](https://github.com/bradfrost)
 * [Patternlab-node](https://github.com/pattern-lab/patternlab-node)  / [Brian Muenzenmeyer](https://github.com/bmuenzenmeyer)
 * [Magnolia-lighter](https://github.com/topherzee/magnolia-lighter) / [Christopher Zimmermann](https://github.com/topherzee)
