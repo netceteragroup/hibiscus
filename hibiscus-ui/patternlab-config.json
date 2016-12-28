@@ -4,66 +4,89 @@
       "root": "./source/",
       "patterns" : "./source/_patterns/",
       "data" : "./source/_data/",
-      "styleguide" : "./node_modules/patternlab-node/core/styleguide/",
-      "patternlabFiles" : "./node_modules/patternlab-node/core/",
-      "js" : "./source/js",
-      "images" : "./source/images",
-      "fonts" : "./source/fonts",
-      "css" : "./source/css",
-      "yaml" : "./source/yaml"
+      "meta": "./source/_meta/",
+      "annotations" : "./source/_annotations/",
+      "styleguide" : "./node_modules/styleguidekit-assets-default/dist/",
+      "patternlabFiles" : "./node_modules/styleguidekit-mustache-default/views/",
+      "js" : "./source/js/",
+      "images" : "./source/img/",
+      "fonts" : "./source/fonts/",
+      "css" : "./source/css/",
+      "yaml" : "./source/yaml/"
+
     },
     "public" : {
-      "root" : "./dist-styleguide/",
-      "patterns" : "./dist-styleguide/patterns/",
-      "data" : "./dist-styleguide/data/",
-      "styleguide" : "./dist-styleguide/styleguide/",
-      "js" : "./dist-styleguide/js",
-      "images" : "./dist-styleguide/webresources/images",
-      "fonts" : "./dist-styleguide/fonts",
-      "css" : "./dist-styleguide/css"
+      "root" : "./target/dist-styleguide/",
+      "patterns" : "./target/dist-styleguide/patterns/",
+      "data" : "./target/dist-styleguide/styleguide/data/",
+      "annotations" : "./target/dist-styleguide/annotations/",
+      "styleguide" : "./target/dist-styleguide/styleguide/",
+      "webresources" : "./target/dist-styleguide/webresources/",
+      "js" : "./target/dist-styleguide/webresources/js/",
+      "images" : "./target/dist-styleguide/webresources/img/",
+      "fonts" : "./target/dist-styleguide/webresources/fonts/",
+      "css" : "./target/dist-styleguide/webresources/css/"
     },
-    "temp" : "./temp/ftl/",
-    "magnolia" : "./magnolia-resources"
+    "temp" : {
+      "root" : "./target/temp/",
+      "ftl" : "./target/temp/ftl/",
+      "webresources" : "./target/temp/webresources/",
+      "css" : "./target/temp/webresources/css/",
+      "js" : "./target/temp/webresources/js/",
+      "patterns": "./target/temp/patterns/",
+      "icons" : "./target/temp/webresources/icons/"
+
+
+    },
+    "magnolia" : {
+      "root" : "./target/magnolia-resources/hibiscus-lite/",
+      "webresources" : "./target/magnolia-resources/hibiscus-lite/webresources/",
+      "images" : "./target/magnolia-resources/hibiscus-lite/webresources/img/",
+      "fonts" : "./target/magnolia-resources/hibiscus-lite/webresources/fonts/",
+      "css" : "./target/magnolia-resources/hibiscus-lite/webresources/css/",
+      "js" : "./target/magnolia-resources/hibiscus-lite/webresources/js/"
+    }
+
   },
   "styleGuideExcludes": [
-    "templates",
-    "pages"
   ],
   "defaultPattern": "all",
+  "defaultShowPatternInfo": false,
+  "cleanPublic" : true,
+  "patternExtension": "mustache",
   "ignored-extensions" : ["scss", "DS_Store", "less"],
   "ignored-directories" : ["scss"],
   "debug": false,
-  "ishControlsVisible": {
-    "s": true,
-    "m": true,
-    "l": true,
-    "full": true,
-    "random": true,
-    "disco": true,
+  "ishControlsHide": {
+    "s": false,
+    "m": false,
+    "l": false,
+    "full": false,
+    "random": false,
+    "disco": false,
     "hay": true,
-    "mqs": true,
-    "find": true,
-    "views-all": true,
-    "views-annotations": true,
-    "views-code": true,
-    "views-new": true,
-    "tools-all": true,
-    "tools-sync": true,
-    "tools-shortcuts": true,
-    "tools-docs": true
+    "mqs": false,
+    "find": false,
+    "views-all": false,
+    "views-annotations": false,
+    "views-code": false,
+    "views-new": false,
+    "tools-all": false,
+    "tools-docs": false
   },
+  "ishMinimum": "240",
+  "ishMaximum": "2600",
   "patternStateCascade": ["inprogress", "inreview", "complete"],
   "patternStates": {
-    "atoms-button" : "inreview",
-    "atoms-choice" : "complete",
-    "subcomponents-choices" : "inprogress",
-    "subcomponents-teaser" : "complete",
-    "components-info" : "complete",
-    "components-masthead" : "complete",
-    "pages-hibiscus-demo" : "complete"
   },
-  "patternExportKeys": [],
+  "patternExportPatternPartials": [],
   "patternExportDirectory": "./pattern_exports/",
-  "baseurl" : "",
-  "cacheBust": true
+  "cacheBust": true,
+  "starterkitSubDir": "dist",
+  "outputFileSuffixes": {
+    "rendered": ".rendered",
+    "rawTemplate": "",
+    "markupOnly": ".markup-only"
+  },
+  "cleanOutputHtml": true
 }

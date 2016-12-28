@@ -4,13 +4,18 @@ var gulp = require('gulp');
   // csslint = require('gulp-csslint'),
   // config = require('./config');
 
-gulp.task('csslint', 'lints custom css', ['sass:transpile'], function() {
-//   gulp.src(config.paths.temp + '/webresources/css/main.css')
+gulp.task('csslint',
+//'lints custom css',
+ gulp.series('sass'),
+ function() {
+//   gulp.src(config.paths.temp.css + '/main.css')
 //   .pipe(csslint('./.csslintrc'))
 //     .pipe(csslint.reporter());
 });
 
-gulp.task('jslint', 'lints js-files', function() {
+gulp.task('jslint',
+ //'lints js-files',
+  function() {
   // return gulp.src(config.paths.source + '/js/**/*.js')
   //   .pipe(jshint())
   //   .pipe(jshint.reporter('default'));

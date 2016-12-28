@@ -8,6 +8,14 @@ Expects buffer of JSON.
 
 'use strict';
 
+path = require('path');
+
+var config = require('../../patternlab-config.json');
+function paths() {
+    return config.paths;
+}
+
+
 var gutil = require('gulp-util');
 var through = require('through2');
 var util = require('util');
@@ -53,7 +61,7 @@ module.exports = function() {
 
             //Check for existance of file
             // @@ hibiscus ADJUSTMENT
-            var pathScript = (file.base + relPathScript).replace('source/yaml/','magnolia-resources/').replace('source\\yaml\\','magnolia-resources\\');
+            var pathScript = (file.base + relPathScript).replace(path.resolve(paths().source.yaml),'./target/magnolia-resources').replace(path.resolve(paths().source.yaml).replace('/','\\'), 'target\\magnolia-resources\\');
             // console.log("pathScript:" + pathScript);
             try {
                 var stats = fs.statSync(pathScript);

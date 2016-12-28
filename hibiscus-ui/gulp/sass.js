@@ -1,36 +1,30 @@
-var gulp = require('gulp-help')(require('gulp')),
+var gulp = require('gulp'),
   sass = require('gulp-sass'),
   rename = require('gulp-rename'),
-  runSequence = require('run-sequence')
-  config = require('./config'),
-  parker = require('gulp-parker');
-gulp.task('sass', function(callback) {
-  runSequence('sass:transpile', 'autoprefixer', 'csslint', callback); // sass:external is called during setup to improve performance
-});
+  autoprefixer = require('gulp-autoprefixer'),
+  sourcemaps = require('gulp-sourcemaps'),
+  parker = require('gulp-parker'),
+  path = require('path');
 
-gulp.task('sass:transpile', 'transpiles scss to css', function() {
-  return gulp.src(config.paths.source + '/css/main.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(rename(function(path) {
-      path.basename = 'main-unprefixed';
-    }))
-    .pipe(gulp.dest(config.paths.temp + '/webresources/css/'))
-});
 
-gulp.task('autoprefixer', function() {
-  var autoprefixer = require('gulp-autoprefixer');
-  return gulp.src(config.paths.temp + '/webresources/css/main-unprefixed.css')
-    .pipe(rename(function(path) {
-      path.basename = 'main';
-    }))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
-    }))
-    .pipe(gulp.dest(config.paths.temp + '/webresources/css'));
-});
+  var config = require('../patternlab-config.json');
+  function paths() {
+    return config.paths;
+  }
 
-gulp.task('parker', 'show css-stats', function() {
-	return gulp.src('./dist-styleguide/webresources/css/main.css')
+gulp.task('parker', function() {
+	return gulp.src(path.resolve(paths().styleguide.css + 'main.css'))
 		.pipe(parker());
+  });
+
+  gulp.task('sass', function() {
+      return gulp.src('main.scss', {cwd: path.resolve(paths().source.css)})
+          .pipe(sourcemaps.init())
+          .pipe(sass().on('error', sass.logError))
+          .pipe(autoprefixer({
+              browsers: ['last 3 versions'],
+              cascade: false,
+              remove: false}))
+          .pipe(sourcemaps.write()) //  .pipe(sourcemaps.write('./maps')) to write source maps to seperate files
+          .pipe(gulp.dest(path.resolve(paths().temp.css)));
   });

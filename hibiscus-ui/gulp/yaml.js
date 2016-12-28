@@ -1,11 +1,18 @@
 // @@ hibiscus ADJUSTMENT
 var config = require('./config');
+path = require('path');
+
+var config = require('../patternlab-config.json');
+function paths() {
+    return config.paths;
+}
+
 
 // configuration
 
 var SRC_LIGHTER_DIR = './gulp/magnolia-lighter/src-lighter';
-var SRC_MODULES_DIR = './source/yaml';
-var DEST_DIR = './magnolia-resources';
+var SRC_MODULES_DIR = path.resolve(paths().source.yaml);
+var DEST_DIR = './target/magnolia-resources';
 
 // dependencies
 
@@ -33,12 +40,7 @@ var TEMPLATE_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/template.yam
 var APP_TEMPLATE = fs.readFileSync(SRC_LIGHTER_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
 var DIALOG_FIELD_REPLACEMENTS = fs.readFileSync(SRC_LIGHTER_DIR + '/replacements/dialog-fields.yaml', 'utf8');
 
-// @@ hibiscus ADJUSTMENT (changed name of default task)
-/**
-Default.
-Runs when you type 'gulp'.
-*/
-gulp.task('dist:yaml', ['all']);
+
 
 /**
 Configure which files to watch and what tasks to use on file changes
@@ -61,6 +63,13 @@ gulp.task('all', function(callback) {
     processApps();
     callback();
 });
+
+// @@ hibiscus ADJUSTMENT (changed name of default task)
+/**
+Default.
+Runs when you type 'gulp'.
+*/
+gulp.task('dist:yaml', gulp.series('all'));
 
 /**
 Process Apps

@@ -7,7 +7,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${basedir}/magnolia-resources/hibiscus-lite</directory>
+      <directory>${basedir}/target/magnolia-resources/hibiscus-lite</directory>
       <outputDirectory>/src/main/resources/hibiscus-lite</outputDirectory>
     </fileSet>
   </fileSets>

@@ -1,4 +1,4 @@
-var gulp = require('gulp-help')(require('gulp'));
+var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var config = require('./config');
 var del = require('del');
@@ -9,37 +9,30 @@ var bsProxy = browserSync.create("proxy");
 function paths() {
     return require('./../patternlab-config.json').paths;
 }
-require('./patternlab');
+require('./clean');
 
-gulp.task('default', 'run patternlab', ['serve'], function () {
-});
+function reload() {
+  return bsProxy.reload();
+}
 
-gulp.task('serve', function () {
-    return runSequence('connect');
-});
+function reloadCSS() {
+  return bsProxy.reload('*.css');
+}
 
-gulp.task('magnolia', 'create dist(ftl-files) for magnolia without clean', function () {
-    runSequence('dist');
+gulp.task('magnolia', gulp.series('dist', function () {
     bsProxy.init({
-        proxy: "localhost:8080",
+        proxy: "localhost:8080/magnoliaAuthor",
         port: 9090
     });
-    gulp.watch(path.resolve(paths().source.yaml, '**/*.yaml'), function () {
-        runSequence('clean:magnolia:yaml', 'clean:magnolia:ftl', 'clean:temp', 'dist:ftl', 'magnolia:reload');
-    });
-    gulp.watch(path.resolve(paths().source.patterns, '**/*.mustache'), function () {
-        runSequence('clean:magnolia:yaml', 'clean:magnolia:ftl', 'clean:temp', 'dist:ftl', 'magnolia:reload');
-    });
-    gulp.watch(path.resolve(paths().source.css, '**/*.scss'), function () {
-        runSequence('clean:magnolia:css', 'clean:temp', 'dist:css', 'magnolia:reload');
-    });
-    gulp.watch(path.resolve(paths().source.js, '**/*.js'), function () {
-        runSequence('clean:magnolia:js', 'clean:temp', 'dist:js', 'magnolia:reload');
-    });
-});
+    gulp.watch(path.resolve(paths().source.yaml + '**/*.yaml'), { awaitWriteFinish: true }).on('change', gulp.series(/*'clean:magnolia:yaml', 'clean:magnolia:ftl',*/ 'clean:temp', 'dist:ftl', 'dist:yaml',  reload));
+    gulp.watch(path.resolve(paths().source.patterns + '**/*.mustache'), { awaitWriteFinish: true }).on('change', gulp.series(/*'clean:magnolia:yaml', 'clean:magnolia:ftl',*/ 'clean:temp', 'dist:ftl', reload));
+    gulp.watch(path.resolve(paths().source.css + '**/*.scss'), { awaitWriteFinish: true }).on('change', gulp.series('clean:magnolia:css', 'clean:temp', 'dist:css', reloadCSS));
+    gulp.watch(path.resolve(paths().source.js + '**/*.js'), { awaitWriteFinish: true }).on('change', gulp.series('clean:magnolia:js', 'clean:temp', 'dist:js', reload));
 
-gulp.task('magnolia:reload', 'browsersync reload for magnolia', function (callback) {
+}));
+
+gulp.task('magnolia:reload', function () {
     console.log('browser sync reload');
-    bsProxy.reload();
-    callback();
+    reloadCSS();
+    return;
 });

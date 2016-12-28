@@ -7,7 +7,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${basedir}/dist-styleguide</directory>
+      <directory>${basedir}/target/dist-styleguide</directory>
       <outputDirectory>/</outputDirectory>
     </fileSet>
   </fileSets>

@@ -20,17 +20,14 @@ Now the project should be set up correctly and any of the following tasks can be
 |npm install	|install needed npm-dependencies|
 |npm run clean	|remove temporary and output directories|
 |npm start	|run styleguide|
-|npm run serve	|same as 'npm start'|
-|npm run styleguide	|same as 'npm start'|
-|npm run styleguide:serve	|same as 'npm start'|
-|npm run styleguide:dist	|render styleguide (templates and scss) into ./dist-styleguide|
+|npm run styleguide	|render styleguide (templates and scss) into ./dist-styleguide|
 |npm run magnolia	|run development mode (see Quick integration into magnolia below)|
-|npm run magnolia:serve	|same as 'npm run magnolia'|
 |npm run magnolia:dist	|create dist into ./dist-magnolia (to be exported to magnolia )|
-|npm run combined:dist	|combined dist (styleguide & magnolia)|
-|npm run help	|show all available tasks|
+|npm run combined	|combined dist (styleguide & magnolia)|
 
-Basically, there are two different options to run 'serve' or 'dist' on either the styleguide or the magnolia-output. If not defined, the default is to run the serve command.
+Basically, there are different options to run:
+ - start -> styleguide develoment mode
+ - magnolia- -> magnolia'serve' or 'dist' on either the styleguide or the magnolia-output. If not defined, the default is to run the serve command.
 
 ## Remarks
 

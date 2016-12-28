@@ -1,112 +1,190 @@
-// copy from node_modules/patternlab-node/gulpfile.js (with adjustments to file references)
-// added cp:styleguide-task and disabled scss-transpilation
-
-// Special thanks to oscar-g (https://github.com/oscar-g) for starting this at https://github.com/oscar-g/patternlab-node/tree/dev-gulp
-
-/* #CHANGED altered package.json path*/
-    var pkg = require('./../node_modules/patternlab-node/package.json'),
-    gulp = require('gulp'),
+/******************************************************
+ * PATTERN LAB NODE
+ * EDITION-NODE-GULP
+ * The gulp wrapper around patternlab-node core, providing tasks to interact with the core library and move supporting frontend assets.
+ ******************************************************/
+var gulp = require('gulp'),
     path = require('path'),
-    eol = require('os').EOL,
-    strip_banner = require('gulp-strip-banner'),
-    header = require('gulp-header'),
-    nodeunit = require('gulp-nodeunit'),
-    eslint = require('gulp-eslint'),
-		sass = require('gulp-sass'),
-    config = require('./config'),
-    browserSync = require('browser-sync').create();
+    rename=require('gulp-rename'),
+    browserSync = require('browser-sync').create(),
+    argv = require('minimist')(process.argv.slice(2));
 
-/* #CHANGED required sass*/
-require('./sass');
-
-require('gulp-load')(gulp);
-var banner = [ '/** ',
-  ' * <%= pkg.name %> - v<%= pkg.version %> - <%= today %>',
-  ' * ',
-  ' * <%= pkg.author %>, and the web community.',
-  ' * Licensed under the <%= pkg.license %> license.',
-  ' * ',
-  ' * Many thanks to Brad Frost and Dave Olsen for inspiration, encouragement, and advice.',
-  ' * ', ' **/'].join(eol);
-
-function paths() {
-  /* #CHANGED altered config path */
-  return require('./../patternlab-config.json').paths;
+function resolvePath(pathInput) {
+  return path.resolve(pathInput).replace(/\\/g,"/");
 }
 
-//load patternlab-node tasks
-gulp.loadTasks(__dirname + '/core/lib/patternlab_gulp.js');
-
-//clean patterns dir
-
-
-//build the banner
-gulp.task('banner', function () {
-  return gulp.src([
-    /* #CHANGED altered most /core/lib paths*/
-    './core/lib/patternlab.js',
-    './../../node_modules/patternlab-node/core/lib/object_factory.js',
-    './../../node_modules/patternlab-node/core/lib/lineage_hunter.js',
-    './../../node_modules/patternlab-node/core/lib/media_hunter.js',
-    './../../node_modules/patternlab-node/core/lib/patternlab_grunt.js',
-    './core/lib/patternlab_gulp.js',
-    './../../node_modules/patternlab-node/core/lib/parameter_hunter.js',
-    './../../node_modules/patternlab-node/core/lib/pattern_exporter.js',
-    './../../node_modules/patternlab-node/core/lib/pattern_assembler.js',
-    './../../node_modules/patternlab-node/core/lib/pseudopattern_hunter.js',
-    './../../node_modules/patternlab-node/core/lib/list_item_hunter.js',
-    './../../node_modules/patternlab-node/core/lib/style_modifier_hunter.js'
-  ])
-    .pipe(strip_banner())
-    .pipe(header(banner, {
-      pkg : pkg,
-      today : new Date().getFullYear() }
-    ))
-    .pipe(gulp.dest('./core/lib'));
-});
-
-
-// COPY TASKS
-
+/******************************************************
+ * COPY TASKS - stream assets from source to destination
+ ******************************************************/
 // JS copy
-/* #CHANGED added dist:js pre-task*/
-gulp.task('cp:js', ['dist:js'], function () {
-  return gulp.src('**/*.js', {cwd: path.resolve(paths().source.js)})
-    .pipe(gulp.dest(path.resolve(paths().public.js)))
-    .pipe(browserSync.stream());
+gulp.task('pl-copy:js', function(){
+  return gulp.src('**/*.js', {cwd: resolvePath(paths().source.js)} )
+      .pipe(gulp.dest(resolvePath(paths().public.js)));
 });
 
-// Data copy
-gulp.task('cp:data', function () {
-  return gulp.src('annotations.js', {cwd: path.resolve(paths().source.data)})
-    .pipe(gulp.dest(path.resolve(paths().public.data)));
+// Images copy
+gulp.task('pl-copy:img', function(){
+  return gulp.src('**/*.*',{cwd: resolvePath(paths().source.images)} )
+      .pipe(gulp.dest(resolvePath(paths().public.images)));
+});
+
+// Favicon copy
+gulp.task('pl-copy:favicon', function(){
+  return gulp.src('favicon.ico', {cwd: resolvePath(paths().source.root)} )
+      .pipe(gulp.dest(resolvePath(paths().public.root)));
+});
+
+// Fonts copy
+gulp.task('pl-copy:font', function(){
+  return gulp.src('*', {cwd: resolvePath(paths().source.fonts)})
+      .pipe(gulp.dest(resolvePath(paths().public.fonts)));
 });
 
 // CSS Copy
-/* #CHANGED added dist:css pre-task*/
-gulp.task('cp:css', ['dist:css'], function () {
-  return gulp.src(path.resolve(paths().source.css, 'style.css'))
-    .pipe(gulp.dest(path.resolve(paths().public.css)))
-    .pipe(browserSync.stream());
-});
+gulp.task('pl-copy:css',  gulp.series('sass', function(){
+  return gulp.src('*.css', {cwd: resolvePath(paths().temp.css)})
+      .pipe(gulp.dest(resolvePath(paths().public.css)))
+      .pipe(browserSync.stream());
+  }
+  /*, function() {
+  return gulp.src('*-unprefixed.css', '!' + {cwd: resolvePath(paths().temp.css)})
+      .pipe(gulp.dest(resolvePath(paths().public.css)))
+      .pipe(browserSync.stream());
+}*/
+  ));
 
-// Styleguide Copy
-gulp.task('cp:styleguide', function () {
-  return gulp.src(
-      ['**/*'],
-      {cwd: path.resolve(paths().source.styleguide)})
-      .pipe(gulp.dest(path.resolve(paths().public.styleguide)))
+// Styleguide Copy everything but css
+gulp.task('pl-copy:styleguide', function(){
+  return gulp.src(resolvePath(paths().source.styleguide) + '/**/!(*.css)')
+      .pipe(gulp.dest(resolvePath(paths().public.root)))
       .pipe(browserSync.stream());
 });
 
-// server and watch tasks
-gulp.task('connect', ['lab'],  function () {
+// Styleguide Copy and flatten css
+gulp.task('pl-copy:styleguide-css', function(){
+  return gulp.src(resolvePath(paths().source.styleguide) + '/**/*.css')
+      .pipe(gulp.dest(function(file){
+        //flatten anything inside the styleguide into a single output dir per http://stackoverflow.com/a/34317320/1790362
+        file.path = path.join(file.base, path.basename(file.path));
+        return resolvePath(path.join(paths().public.styleguide, '/css'));
+      }))
+      .pipe(browserSync.stream());
+});
+
+/******************************************************
+ * PATTERN LAB CONFIGURATION - API with core library
+ ******************************************************/
+//read all paths from our namespaced config file
+var config = require('./../patternlab-config.json'),
+    patternlab = require('./core/lib/patternlab')(config);
+
+function paths() {
+  return config.paths;
+}
+
+function getConfiguredCleanOption() {
+  return config.cleanPublic;
+}
+
+function build(done) {
+  patternlab.build(done, getConfiguredCleanOption());
+}
+
+gulp.task('pl-assets', gulp.series(
+    gulp.parallel(
+        'pl-copy:js',
+        'pl-copy:img',
+        'pl-copy:favicon',
+        'pl-copy:font',
+        'pl-copy:css',
+        'pl-copy:styleguide',
+        'pl-copy:styleguide-css'
+    ),
+    function(done){
+      done();
+    })
+);
+
+gulp.task('patternlab:version', function (done) {
+  patternlab.version();
+  done();
+});
+
+gulp.task('patternlab:help', function (done) {
+  patternlab.help();
+  done();
+});
+
+gulp.task('patternlab:patternsonly', function (done) {
+  patternlab.patternsonly(done, getConfiguredCleanOption());
+});
+
+gulp.task('patternlab:liststarterkits', function (done) {
+  patternlab.liststarterkits();
+  done();
+});
+
+gulp.task('patternlab:loadstarterkit', function (done) {
+  patternlab.loadstarterkit(argv.kit, argv.clean);
+  done();
+});
+
+gulp.task('patternlab:build', gulp.series('pl-assets', build, function(done){
+  done();
+}));
+
+gulp.task('patternlab:installplugin', function (done) {
+  patternlab.installplugin(argv.plugin);
+  done();
+});
+
+/******************************************************
+ * SERVER AND WATCH TASKS
+ ******************************************************/
+// watch task utility functions
+function getSupportedTemplateExtensions() {
+  var engines = require('./../node_modules/patternlab-node/core/lib/pattern_engines');
+  return engines.getSupportedFileExtensions();
+}
+function getTemplateWatches() {
+  return getSupportedTemplateExtensions().map(function (dotExtension) {
+    return resolvePath(paths().source.patterns) + '/**/*' + dotExtension;
+  });
+}
+
+function reload() {
+  browserSync.reload();
+}
+
+function reloadCSS() {
+  browserSync.reload('*.css');
+}
+
+function watch() {
+  gulp.watch(resolvePath(paths().source.js) + '/**/*.js', { awaitWriteFinish: true }).on('change', gulp.series('pl-copy:js', reload));
+  gulp.watch(resolvePath(paths().source.css) + '/**/*.{scss,css}', { awaitWriteFinish: true }).on('change', gulp.series('pl-copy:css', reloadCSS));
+  gulp.watch(resolvePath(paths().source.styleguide) + '/**/*.*', { awaitWriteFinish: true }).on('change', gulp.series('pl-copy:styleguide', 'pl-copy:styleguide-css', reloadCSS));
+
+  var patternWatches = [
+    resolvePath(paths().source.patterns) + '/**/*.json',
+    resolvePath(paths().source.patterns) + '/**/*.md',
+    resolvePath(paths().source.data) + '/*.json',
+    resolvePath(paths().source.fonts) + '/*',
+    resolvePath(paths().source.images) + '/*',
+    resolvePath(paths().source.meta) + '/*',
+    resolvePath(paths().source.annotations) + '/*'
+  ].concat(getTemplateWatches());
+
+  //console.log(patternWatches);
+
+  gulp.watch(patternWatches, { awaitWriteFinish: true }).on('change', gulp.series(build, reload));
+}
+
+gulp.task('patternlab:connect', gulp.series(function(done) {
   browserSync.init({
     server: {
-      baseDir: path.resolve(paths().public.root)
+      baseDir: resolvePath(paths().public.root)
     },
-    /* #CHANGED added port-number*/
-    port: 55505,
     snippetOptions: {
       // Ignore all HTML files within the templates folder
       blacklist: ['/index.html', '/', '/?*']
@@ -129,47 +207,15 @@ gulp.task('connect', ['lab'],  function () {
         'text-align: center'
       ]
     }
+  }, function(){
+    console.log('PATTERN LAB NODE WATCHING FOR CHANGES');
+    done();
   });
-  /* #CHANGED altered scss-watch-task, added js-watch-task*/
- gulp.watch(path.resolve(paths().source.css, '**/*.scss'), ['scss-pipe']);
- gulp.watch(path.resolve(paths().source.js, '**/*.js'), ['js-pipe']);
+}));
 
-  gulp.watch(path.resolve(paths().source.styleguide, '**/*.*'), ['cp:styleguide']);
-
-  gulp.watch(
-    [
-      path.resolve(paths().source.patterns, '**/*.mustache'),
-      path.resolve(paths().source.patterns, '**/*.json'),
-      path.resolve(paths().source.fonts + '/*'),
-      path.resolve(paths().source.images + '/*'),
-      path.resolve(paths().source.data + '*.json')
-    ],
-    ['lab-pipe'],
-    function () { browserSync.reload(); }
-  );
-
-});
-
-/* #CHANGED altered update_pattern-task*/
-gulp.task('lab-pipe', ['patternlab:update_pattern'], function(cb){
-  cb();
-  browserSync.reload();
-})
-/* #CHANGED added scss-watch-update-task*/
-gulp.task('scss-pipe', ['cp:css'], function(cb){
-  cb();
-  browserSync.reload();
-})
-/* #CHANGED added js-watch-update-task*/
-gulp.task('js-pipe', ['cp:js'], function(cb){
-  cb();
-  browserSync.reload();
-})
-
-/* #CHANGED added asset-subtasks to asset-task, disabled tasks*/
-gulp.task('assets', [/*'cp:js', */'cp:img', /*, 'cp:font', */'cp:data', 'dist:css', 'dist:js', 'cp:styleguide' ]);
-
-
-gulp.task('version', ['patternlab:version']);
-/* #CHANGED disabled help task overwrite*/
-//gulp.task('help', ['patternlab:help']);
+/******************************************************
+ * COMPOUND TASKS
+ ******************************************************/
+gulp.task('default', gulp.series('patternlab:build'));
+gulp.task('patternlab:watch', gulp.series('patternlab:build', watch));
+gulp.task('patternlab:serve', gulp.series('patternlab:build', 'patternlab:connect', watch));
