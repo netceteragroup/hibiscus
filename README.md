@@ -1,5 +1,8 @@
 # Hibiscus - The Style Guide and Pattern Library Tool for Magnolia CMS
 
+## Status
+> Hibiscus is not maintained anymore and thus archived
+
 "Creating a style guide that is perfectly in sync with the production environment is the Holy Grail."
 [Brad Frost](http://bradfrost.com/blog/post/style-guide-best-practices/)
 
